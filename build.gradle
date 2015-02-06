@@ -1,0 +1,92 @@
+// Apply Gradle plugins
+plugins {
+	id 'java'
+	id 'maven'
+	id 'eclipse'
+	id 'idea'
+
+	id 'com.github.johnrengelman.shadow' version '1.2.0'
+}
+
+defaultTasks 'clean', 'build', 'shadowJar'
+
+// Project information
+group = 'nl.hardijzer.fw.srgtool'
+version = '2.0'
+
+// Extended project information
+ext.projectName = 'srgtool'
+ext.packaging = 'jar'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+// Project repositories
+repositories {
+	mavenCentral()
+}
+
+configurations {
+	deployerJars
+}
+
+// Project dependencies
+dependencies {
+	compile 'asm:asm:3.3.1'
+	compile 'asm:asm-commons:3.3.1'
+	compile 'net.sf.opencsv:opencsv:2.3'
+
+	deployerJars 'org.apache.maven.wagon:wagon-ssh:2.8'
+}
+
+// Read source files using UTF-8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+jar {
+    classifier = 'base'
+	manifest {
+		attributes(
+				'Main-Class': 'nl.hardijzer.fw.SrgTool',
+		)
+	}
+}
+
+shadowJar {
+	classifier = ''
+}
+
+processResources {
+	from 'LICENSE'
+}
+
+artifacts {
+	archives shadowJar
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		setUniqueVersion(true)
+		configuration = configurations.deployerJars
+		if (project.hasProperty("mavenRepo")) {
+			repository(url: project.property("mavenRepo")) {
+				authentication(userName: project.property("mavenUser"), password: project.property("mavenPass"))
+			}
+		}
+
+		pom {
+			groupId = project.group
+			version = project.version
+			artifactId = project.ext.projectName
+			project {
+				packaging 'jar'
+				scm {
+					url 'https://github.com/agaricusb/SrgTools'
+					connection 'scm:git:git://github.com/agaricusb/SrgTools.git'
+					developerConnection 'scm:git:git@github.com:agaricusb/SrgTools.git'
+				}
+			}
+		}
+	}
+}

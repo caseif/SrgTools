@@ -1,10 +1,9 @@
 srgtool 2.0
+===========
+
+This fork ports the project to the Gradle framework and updates the ASM dependency to the version used by [SpongeAPI](https://github.com/SpongePowered/SpongeAPI) (currently 5.0.3).
 
 A utility for manipulating and applying srg mappings. Based on SrgTools by [Frans-Willem](https://github.com/Frans-Willem/SrgTools).
-
-Downloads: https://bitbucket.org/agaricusb/srgtools/downloads
-
-Useful with mappings from https://github.com/agaricusb/MinecraftRemapping
 
 For usage, run with no arguments.
 
