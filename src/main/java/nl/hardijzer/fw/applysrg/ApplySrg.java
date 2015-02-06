@@ -195,15 +195,16 @@ class MyRemapper extends Remapper {
 	}
 }
 
-class InheritanceMapClassVisitor implements ClassVisitor {
+class InheritanceMapClassVisitor extends ClassVisitor {
 	public String strName;
 	public ClassInfo info;
-	
-	public InheritanceMapClassVisitor() {
+
+	public InheritanceMapClassVisitor(int api) {
+		super(api);
 		strName="";
 		info=new ClassInfo();
 	}
-	
+
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 		this.strName=name;
@@ -405,7 +406,7 @@ public class ApplySrg {
 					continue;
 				if (entry.getName().endsWith(".class")) {
 					ClassReader cr=new ClassReader(zipInherit.getInputStream(entry));
-					InheritanceMapClassVisitor cvInheritance=new InheritanceMapClassVisitor();
+					InheritanceMapClassVisitor cvInheritance=new InheritanceMapClassVisitor(Opcodes.ASM5);
 					cr.accept(cvInheritance,0);
 					mapClassInheritance.put(cvInheritance.strName,cvInheritance.info);
 				}

@@ -22,7 +22,6 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
 
 import org.objectweb.asm.*;
 
@@ -71,9 +70,10 @@ class ClassInfo {
 	}
 }
 
-class ClassInfoCollector implements ClassVisitor {
+class ClassInfoCollector extends ClassVisitor {
 	ClassInfo info;
-	public ClassInfoCollector() {
+	public ClassInfoCollector(int api) {
+		super(api);
 		info=new ClassInfo();
 	}
 	@Override
@@ -253,7 +253,7 @@ public class SrgCollisions {
 				continue;
 			if (entry.getName().endsWith(".class")) {
 				ClassReader cr=new ClassReader(zipInput.getInputStream(entry));
-				ClassInfoCollector cic=new ClassInfoCollector();
+				ClassInfoCollector cic=new ClassInfoCollector(Opcodes.ASM5);
 				cr.accept(cic,ClassReader.SKIP_CODE);
 				mapInfo.put(cic.info.strName, cic.info);
 			}

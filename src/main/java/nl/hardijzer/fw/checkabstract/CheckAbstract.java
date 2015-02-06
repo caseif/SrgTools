@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import nl.hardijzer.fw.asm.EmptyVisitor;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.*;
 

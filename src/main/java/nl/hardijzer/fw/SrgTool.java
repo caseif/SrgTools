@@ -8,7 +8,6 @@ import nl.hardijzer.fw.applysrg.*;
 import nl.hardijzer.fw.chainsrg.*;
 import nl.hardijzer.fw.checkabstract.*;
 import nl.hardijzer.fw.integratemcpsrg.*;
-import nl.hardijzer.fw.jarcompare.*;
 import nl.hardijzer.fw.reversesrg.*;
 import nl.hardijzer.fw.srgcollisions.*;
 
@@ -29,8 +28,6 @@ public class SrgTool {
             CheckAbstract.main(args);
         } else if (command.equalsIgnoreCase("integratemcp")) {
             IntegrateMcpSrg.main(args);
-        } else if (command.equalsIgnoreCase("jarcompare")) {
-            JarCompare.main(args);
         } else if (command.equalsIgnoreCase("reverse")) {
             ReverseSrg.main(args);
         } else if (command.equalsIgnoreCase("collisions")) {
@@ -47,7 +44,6 @@ public class SrgTool {
         System.out.println("chain");
         System.out.println("checkabstract");
         System.out.println("integratemcp");
-        System.out.println("jarcompare");
         System.out.println("reverse");
         System.out.println("collisions");
 
